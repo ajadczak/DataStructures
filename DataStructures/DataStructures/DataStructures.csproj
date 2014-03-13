@@ -42,6 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HashMap\ArrayBucket.cs" />
+    <Compile Include="HashMap\BasicHash.cs" />
+    <Compile Include="HashMap\HashMap.cs" />
+    <Compile Include="HashMap\Interfaces\IBucketProvider.cs" />
+    <Compile Include="HashMap\Interfaces\IChainProvider.cs" />
+    <Compile Include="HashMap\Interfaces\IHashProvider.cs" />
+    <Compile Include="HashMap\LinkedListChain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
