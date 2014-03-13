@@ -12,7 +12,10 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            
+            BasicHash<string> basicHash = new BasicHash<string>();
+            ArrayBucket<uint, string> arrayBucket = new ArrayBucket<uint, string>(basicHash);
+            HashMap<uint, string> hashMap = new HashMap<uint, string>(arrayBucket);
+            hashMap.Insert("Test");
         }
     }
 }
