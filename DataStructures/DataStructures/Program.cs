@@ -12,8 +12,11 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
+            // Compose a hash map that uses a basic hash for mapping keys to values,
+            // an array for storing buckets, and a linked list for chains
             BasicHash<string> basicHash = new BasicHash<string>();
-            ArrayBucket<uint, string> arrayBucket = new ArrayBucket<uint, string>(basicHash);
+            LinkedListChain<uint> linkedListChain = new LinkedListChain<uint>();
+            ArrayBucket<uint, string, LinkedListChain<uint>> arrayBucket = new ArrayBucket<uint, string, LinkedListChain<uint>>(basicHash);
             HashMap<uint, string> hashMap = new HashMap<uint, string>(arrayBucket);
             hashMap.Insert("Test");
         }

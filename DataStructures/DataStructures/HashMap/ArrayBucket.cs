@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 
 namespace DataStructures.HashMap
 {
-    public class ArrayBucket<K, V> : IBucketProvider<K, V>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="K">Key type for hashing</typeparam>
+    /// <typeparam name="V">Value type for storing</typeparam>
+    /// <typeparam name="T">Chain type</typeparam>
+    public class ArrayBucket<K, V, T>  : IBucketProvider<K, V, T> where T : IChainProvider<K, V>, new()
     {
         private int capacity;
         private int size;
         private IHashProvider<V> hashProvider;
-        int[] bucket;
+        
+        // Array of chain type T
+        T[] bucket;
 
         public ArrayBucket(IHashProvider<V> hashProvider)
         {
@@ -21,7 +29,7 @@ namespace DataStructures.HashMap
 
             this.capacity = 0;
             this.size = 0;
-            bucket = new int[0];
+            bucket = new T[0];
             this.hashProvider = hashProvider;
         }
 
@@ -34,19 +42,34 @@ namespace DataStructures.HashMap
 
             this.capacity = capacity;
             this.size = 0;
-            bucket = new int[capacity];
+            bucket = new T[capacity];
             this.hashProvider = hashProvider;
         }
 
         public void Insert(V value)
         {
-            
+            // check to see if array needs to grow
+            if(size == capacity)
+            {
+                T[] temp = new T[capacity * 2];
+                Array.Copy(bucket, temp, size);
+                bucket = temp;
+            }
+
             var hash = hashProvider.Hash(value);
+            var index = hash % capacity;
+            if(bucket[index] == null)
+            {
+                bucket[index] = new T();
+            }
+
+            var chain = bucket[index];
+            chain.Insert(value);
         }
 
         public bool Remove(K key)
         {
-            throw new NotImplementedException();
+            
         }
 
         public bool Remove(V value)

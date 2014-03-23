@@ -11,19 +11,14 @@ namespace DataStructures.HashMap
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class LinkedListChain<T> : IChainProvider<T>
+    public class LinkedListChain<K, V> : IChainProvider<K, V>
     {
-        private LinkedList<T> linkedList = new LinkedList<T>();
+        private LinkedList<V> linkedList = new LinkedList<V>();
 
-        public void Insert(T value)
+        public void Insert(V value)
         {
-            LinkedListNode<T> node = new LinkedListNode<T>(value);
+            LinkedListNode<V> node = new LinkedListNode<V>(value);
             linkedList.AddLast(node);
-        }
-
-        public bool Remove(T value)
-        {
-            return linkedList.Remove(value);
         }
 
         public void Clear()
@@ -31,19 +26,19 @@ namespace DataStructures.HashMap
             linkedList.Clear();
         }
 
-        public T Get(T value)
+        public V Get(V value)
         {
-            return default(T);
+            return default(V);
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<V> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return linkedList.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return linkedList.GetEnumerator();
         }
     }
 }

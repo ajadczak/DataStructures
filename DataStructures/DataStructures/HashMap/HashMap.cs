@@ -11,10 +11,10 @@ namespace DataStructures
     /// User provides the implementation of the hash function and bucket chain functionality
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class HashMap<K, V>
+    public class HashMap<K, V, T>
     {
-        private IBucketProvider<K, V> bucketProvider;
-        public HashMap(IBucketProvider<K, V> bucketProvider)
+        private IBucketProvider<K, V, T> bucketProvider;
+        public HashMap(IBucketProvider<K, V, T> bucketProvider)
         {
             if (bucketProvider == null)
                 throw new ArgumentNullException("bucketProvider");

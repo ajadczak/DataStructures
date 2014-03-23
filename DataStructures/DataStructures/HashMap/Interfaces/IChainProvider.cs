@@ -10,8 +10,17 @@ namespace DataStructures.HashMap.Interfaces
     /// Interface to provide basic insert, remove, get, and iterator functions.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IChainProvider<K> : IEnumerable<K>
+    public interface IChainProvider<K, V> : IEnumerable<K>
     {
-        
+        void Insert(V value);
+        //bool Remove(K key);
+        bool Remove(V value);
+        V Get(K key);
+        V GetKey(V value);
+        //V this[K index]
+        //{
+        //    get;
+        //    set;
+        //}
     }
 }

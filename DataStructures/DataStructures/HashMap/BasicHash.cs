@@ -13,11 +13,6 @@ namespace DataStructures.HashMap
     /// <typeparam name="T"></typeparam>
     public class BasicHash<V> : IHashProvider<V>
     {
-        public BasicHash()
-        {
-
-        }
-
         public UInt32 Hash(V value)
         {
             return (UInt32)value.GetHashCode();
