@@ -13,17 +13,19 @@ namespace DataStructures.HashMap.Interfaces
     /// <typeparam name="K">Key type</typeparam>
     /// <typeparam name="V">Value type</typeparam>
     /// <typeparam name="T">Chain type</typeparam>
-    public interface IBucketProvider<K, V, T>
+    public interface IBucketProvider<K, V>
     {
         void Insert(V value);
         bool Remove(K key);
         bool Remove(V value);
         V Get(K key);
-        T GetKey(V value);
+        K GetKey(V value);
         V this[K index]
         {
             get;
             set;
         }
     }
+
+
 }

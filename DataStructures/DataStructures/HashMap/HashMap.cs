@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +10,10 @@ namespace DataStructures
     /// User provides the implementation of the hash function and bucket chain functionality
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class HashMap<K, V, T>
+    public class HashMap<K, V>
     {
-        private IBucketProvider<K, V, T> bucketProvider;
-        public HashMap(IBucketProvider<K, V, T> bucketProvider)
+        private IBucketProvider<K, V> bucketProvider;
+        public HashMap(IBucketProvider<K, V> bucketProvider)
         {
             if (bucketProvider == null)
                 throw new ArgumentNullException("bucketProvider");

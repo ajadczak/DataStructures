@@ -13,25 +13,20 @@ namespace DataStructures.HashMap
     /// <typeparam name="K">Key type for hashing</typeparam>
     /// <typeparam name="V">Value type for storing</typeparam>
     /// <typeparam name="T">Chain type</typeparam>
-    public class ArrayBucket<K, V, T>  : IBucketProvider<K, V, T> where T : IChainProvider<K, V>, new()
+    public class ArrayBucket<K, V>  : IBucketProvider<K, V>
     {
         private int capacity;
         private int size;
         private IHashProvider<V> hashProvider;
-        
-        // Array of chain type T
-        T[] bucket;
+        LinkedList<V>[] bucket;
+        private bool fastIndex;
 
-        public ArrayBucket(IHashProvider<V> hashProvider)
+        private bool IsPowerOfTwo(ulong num)
         {
-            if(hashProvider == null)
-                throw new ArgumentNullException("hashProvider");
-
-            this.capacity = 0;
-            this.size = 0;
-            bucket = new T[0];
-            this.hashProvider = hashProvider;
+            return (num != 0) && (num & (num - 1)) == 0;
         }
+        
+        public ArrayBucket(IHashProvider<V> hashProvider) : this(hashProvider, 16) {}
 
         public ArrayBucket(IHashProvider<V> hashProvider, int capacity)
         {
@@ -39,37 +34,72 @@ namespace DataStructures.HashMap
                 throw new ArgumentNullException("hashProvider");
             if (capacity < 0 || capacity > int.MaxValue)
                 throw new ArgumentOutOfRangeException("capacity");
+            //if(!IsPowerOfTwo((ulong)capacity))
+                //throw new ArgumentException("Capacity must be a power of two");
 
             this.capacity = capacity;
             this.size = 0;
-            bucket = new T[capacity];
+            bucket = new LinkedList<V>[capacity];
             this.hashProvider = hashProvider;
+            
+            // If capacity is a power of 2 then we can do hash & (size - 1) to get the index
+            // otherwise use hash % capacity to get index
+
+            fastIndex = IsPowerOfTwo((ulong)capacity);
         }
 
         public void Insert(V value)
         {
+            int index = 0;
             // check to see if array needs to grow
             if(size == capacity)
             {
-                T[] temp = new T[capacity * 2];
-                Array.Copy(bucket, temp, size);
+                capacity++;
+                LinkedList<V>[] temp = new LinkedList<V>[capacity * 2];
+                //rehash all values and reinsert into new buckets
+                foreach(var chain in bucket)
+                {
+                    for(var entry = chain.First; entry != chain.Last; entry = entry.Next)
+                    {
+                        var rehash = hashProvider.Hash(entry.Value);
+                        index = 0;
+                        if (fastIndex)
+                            index = (int)(rehash & (capacity - 1));
+                        else
+                            index = (int)(rehash % capacity);
+
+                        if(temp[index] == null)
+                        {
+                            temp[index] = new LinkedList<V>();
+                        }
+
+                        temp[index].AddLast(entry.Value);
+                    }
+                }
+
                 bucket = temp;
             }
 
-            var hash = hashProvider.Hash(value);
-            var index = hash % capacity;
+            var hash = Math.Abs(hashProvider.Hash(value));
+            if (fastIndex)
+                index = (int)(hash & (capacity - 1));
+            else
+                index = (int)(hash % capacity);
+
+            
             if(bucket[index] == null)
             {
-                bucket[index] = new T();
+                bucket[index] = new LinkedList<V>();
             }
 
-            var chain = bucket[index];
-            chain.Insert(value);
+            var chain2 = bucket[index];
+            chain2.AddLast(value);
+            size++;
         }
 
         public bool Remove(K key)
         {
-            
+            return true;
         }
 
         public bool Remove(V value)
