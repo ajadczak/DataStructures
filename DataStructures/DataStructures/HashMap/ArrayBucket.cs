@@ -19,6 +19,7 @@ namespace DataStructures.HashMap
         private int size;
         private IHashProvider<V> hashProvider;
         LinkedList<V>[] bucket;
+
         private bool fastIndex;
 
         private bool IsPowerOfTwo(ulong num)
@@ -72,7 +73,7 @@ namespace DataStructures.HashMap
                         {
                             temp[index] = new LinkedList<V>();
                         }
-
+                        
                         temp[index].AddLast(entry.Value);
                     }
                 }
@@ -90,10 +91,19 @@ namespace DataStructures.HashMap
             if(bucket[index] == null)
             {
                 bucket[index] = new LinkedList<V>();
+                //KeyValuePair<K, V> kvp = new KeyValuePair<K,V>();
+                //bucket[index].AddLast(kvp);
+            }
+            else
+            {
+                //bucket[index].
+                if(bucket[index].Contains(value))
+                {
+
+                }
             }
 
-            var chain2 = bucket[index];
-            chain2.AddLast(value);
+            
             size++;
         }
 

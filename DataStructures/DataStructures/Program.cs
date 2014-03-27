@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataStructures.HashMap;
-using DataStructures.HashMap.Interfaces;
+using DataStructures.GenericHashMap;
+using DataStructures.GenericHashMap.Interfaces;
+using DataStructures.GenericHashMap.Implementations;
 
 namespace DataStructures
 {
@@ -12,13 +13,27 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            // Compose a hash map that uses a basic hash for mapping keys to values,
-            // an array for storing buckets, and a linked list for chains
-            BasicHash<string> basicHash = new BasicHash<string>();
-            var arrayBucket = new ArrayBucket<int, string>(basicHash);
-            HashMap<int, string> hashMap = new HashMap<int, string>(arrayBucket);
-            hashMap.Insert("Test");
-            hashMap.Insert("Test");
+            BasicHash<string> stringHasher = new BasicHash<string>();
+            ArrayBucket<string, Model> bucket = new ArrayBucket<string, Model>(stringHasher);
+            GenericHashMap<string, Model> modelMap = new GenericHashMap<string, Model>(bucket);
+
+            Model modelData = new Model();
+            modelData.LoadData();
+            modelMap.Insert("TestModel", modelData);
+            modelMap.Insert("TestModel2", modelData);
+            modelMap.Insert("TestModel", modelData); 
+            modelMap.Remove("TestModel");
+        }
+
+        /// <summary>
+        /// Some sample data
+        /// </summary>
+        private class Model
+        {
+            public void LoadData()
+            {
+
+            }
         }
     }
 }
