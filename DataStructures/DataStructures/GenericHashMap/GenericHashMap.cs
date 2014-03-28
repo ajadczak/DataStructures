@@ -29,5 +29,22 @@ namespace DataStructures.GenericHashMap
         {
             return bucketProvider.Remove(key);
         }
+
+        public V Get(K key)
+        {
+            return bucketProvider.Get(key);
+        }
+
+        public V this[K key]
+        {
+            get
+            {
+                return bucketProvider[key];
+            }
+            set
+            {
+                bucketProvider[key] = value;
+            }
+        }
     }
 }

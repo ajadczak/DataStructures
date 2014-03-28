@@ -100,6 +100,25 @@ namespace DataStructures.GenericHashMap.Implementations
             return false;
         }
 
+        public V Get(K key)
+        {
+            return this[key];
+        }
+
+        public V this[K key]
+        {
+            get
+            {
+                var hash = hashProvider.Hash(key);
+                var index = getIndex(hash);
+                return bucket[index].Single(k => k.Key.Equals(key)).Value;
+            }
+            set
+            {
+                this.Insert(new KeyValuePair<K, V>(key, value));
+            }
+        }
+
         private int getIndex(uint hash)
         {
             if (fastIndex)

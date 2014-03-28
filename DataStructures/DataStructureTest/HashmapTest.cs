@@ -22,5 +22,22 @@ namespace DataStructureTest
 
             Assert.IsTrue(result);
         }
+
+        public void TestGet()
+        {
+            BasicHash<string> hash = new BasicHash<string>();
+            ArrayBucket<string, int> simpleBucket = new ArrayBucket<string, int>(hash);
+            GenericHashMap<string, int> map = new GenericHashMap<string, int>(simpleBucket);
+
+            var testKey = "Test";
+            var testValue = 5;
+            map.Insert(testKey, testValue);
+
+            var testIndexing = map["Test"];
+            var testGet = map.Get("Test");
+
+            Assert.AreEqual(testIndexing, testValue);
+            Assert.AreEqual(testGet, testValue);
+        }
     }
 }

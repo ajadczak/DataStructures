@@ -22,7 +22,8 @@ namespace DataStructures
             modelMap.Insert("TestModel", modelData);
             modelMap.Insert("TestModel2", modelData);
             modelMap.Insert("TestModel", modelData); 
-            modelMap.Remove("TestModel");
+            var model = modelMap["TestModel"];
+            var temp = model;
         }
 
         /// <summary>

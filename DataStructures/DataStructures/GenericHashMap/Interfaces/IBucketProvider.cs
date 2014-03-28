@@ -10,5 +10,11 @@ namespace DataStructures.GenericHashMap.Interfaces
     {
         void Insert(KeyValuePair<K, V> kvp);
         bool Remove(K key);
+        V Get(K key);
+        V this[K key]
+        {
+            get;
+            set;
+        }
     }
 }
